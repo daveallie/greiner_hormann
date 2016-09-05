@@ -1,3 +1,7 @@
+require 'greiner_hormann/intersection'
+require 'greiner_hormann/polygon'
+require 'greiner_hormann/vertex'
+
 module GreinerHormann
   class << self
     def clip(poly_a, poly_b, source_forwards, clip_forwards)
