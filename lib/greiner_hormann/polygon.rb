@@ -18,7 +18,7 @@ module GreinerHormann
         self.first.prev_node = vert
       else
         next_n = self.first
-        prev_n = next_n.prev
+        prev_n = next_n.prev_node
 
         next_n.prev_node = vert
         vert.next_node = next_n
@@ -90,7 +90,7 @@ module GreinerHormann
 
       loop do
         points << [v.x, v.y]
-        v = v.next
+        v = v.next_node
         break if v == self.first
       end
 
@@ -124,11 +124,12 @@ module GreinerHormann
               end
             end
             clip_vert = clip_vert.next_node
+            break if clip_vert == clip.first
           end
         end
 
         source_vert = source_vert.next_node
-        break if clip_vert == clip.first
+        break if source_vert == self.first
       end
 
       source_vert = self.first
@@ -145,7 +146,7 @@ module GreinerHormann
           source_vert.is_entry = source_forwards
           source_forwards = !source_forwards
         end
-        source_vert = source_vert.next
+        source_vert = source_vert.next_node
         break if source_vert == self.first
       end
 
@@ -154,7 +155,7 @@ module GreinerHormann
           clip_vert.is_entry = clip_forwards
           clip_forwards = !clip_forwards
         end
-        clip_vert = clip_vert.next
+        clip_vert = clip_vert.next_node
         break if clip_vert == clip.first
       end
 
@@ -181,7 +182,7 @@ module GreinerHormann
             end
           end
           current = current.corresponding
-          break if current.is_visited
+          break if current.visited
         end
 
         list << clipped.get_points
